@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css">
+    <title>Change</title></head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container bg-white bg-opacity-50 col-md-6 col-sm-1 col-sm-5 offset-2">
+    <div class="col-sm-12 col-sm-8 col-md-6 col-sm-offset-4 col-md-offset-3">
+
+        <form class="form-signin" autocomplete="off" th:action="@{${id}}" th:object="${thisFactory}" method="POST">
+            <fieldset>
+                <h1>Factory editor</h1>
+                <div class="form-group">
+                    <label>Factory name</label>
+                    <input type="text" th:field="*{name}" class="form-control input-lg" title="username"
+                           autofocus="true"/>
+                    <div>
+                        <span th:text="${'Warehouses count'} + ' ' + ${warehouses.size()}"></span>
+                    </div>
+                    <div class="col card-deck ml-5 my-3" th:if="${warehouses.size() != 0}">
+                        <div class="card" th:each="warehouse : ${warehouses}">
+
+                            <!--                        <img class="card-img-top" th:if="${!factory.getImageUrl().isEmpty()}" th:src="${factory.getImageUrl()}" alt="Card image cap">-->
+                            <div class="card-body">
+                                <h4 class="card-title" th:text="${warehouse.getName()}"></h4>
+                                <p class="text-secondary">Telephone number:</p>
+                                <h6 class="card-title" th:text="${warehouse.getTelephoneNumber()}"></h6>
+                            </div>
+                            <div class="card-footer">
+<!--                                <p th:text="${factory.getId()}"></p>-->
+                                <a th:href="@{${thisFactory.getId()} + '/warehouses/edit/' + ${warehouse.getId()}}"
+                                   class="btn btn-lg btn-outline-info btn-block"
+                                th:text="${'Edit'}"></a>
+                                <a th:href="@{${thisFactory.getId()} + '/warehouses/remove/' + ${warehouse.getId()}}"
+                                   class="btn btn-lg btn-outline-danger btn-block "
+                                   th:text="${'Remove'}"></a>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <a th:href="@{${thisFactory.getId()} + '/warehouses/create/'}"
+                       class="btn btn-lg btn-info btn-block "
+                       th:text="${'Add'}"></a>
+                </div>
+                <input class="btn btn-primary" type="submit"/>
+            </fieldset>
+        </form>
+    </div>
+    <!--    </div>-->
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

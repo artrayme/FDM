@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:fragment="header-css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.1.1/css/bootstrap.min.css/}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/5.0.10/web-fonts-with-css/css/fontawesome-all.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title>FDM</title>
+</head>
+
+<body>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">FDM</a>
+        <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavAltMarkup">
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <form class="form-inline mx-2 mr-2">
+                    <input class="form-control" type="search" title="search-factory">
+                </form>
+                <button type="submit" class="btn mx-2 mr-2 btn-outline-light">Search</button>
+                <h2 style="color:white" class="mx-auto">Factory Database Manager</h2>
+            </div>
+        </div>
+
+    </nav>
+</div>
+
+</body>
+
+</html>

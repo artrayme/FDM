@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css">
+    <title>Change</title></head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container bg-white bg-opacity-50 col-md-6 col-sm-1 col-sm-5 offset-2">
+    <div class="col-sm-12 col-sm-8 col-md-6 col-sm-offset-4 col-md-offset-3">
+
+        <form class="form-signin" autocomplete="off" th:action="@{${id}}" th:object="${thisWarehouse}" method="POST">
+            <fieldset>
+                <h1>Warehouse editor</h1>
+                <div class="form-group">
+                    <label>Warehouse name</label>
+                    <input type="text" th:field="*{name}" class="form-control input-lg" title="username"
+                           autofocus="true"/>
+                    <div>
+                        <label>Warehouse telephone</label>
+                        <input type="text" th:field="*{telephoneNumber}" class="form-control input-lg" title="username"
+                               autofocus="true"/>
+                        <div>
+                            <span th:text="${'Inventory count'} + ' ' + ${thisWarehouse.inventory.size()}"></span>
+                        </div>
+                        <div class="col card-deck ml-5 my-3" th:if="${thisWarehouse.inventory.size() != 0}">
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-10 mt-5 mb-5">
+                                        <table id="example" class="table table-bordered table-striped table-light"
+                                               style="width: 100%">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Type</th>
+                                                <th>count</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="unit : ${thisWarehouse.inventory}">
+                                                <td th:text="${unit.id}">Name</td>
+                                                <td th:text="${unit.type}">Position</td>
+                                                <td th:text="${unit.count}">Office</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <input class="btn btn-primary" type="submit"/>
+                    <a th:href="@{${thisWarehouse.getId()} + '/report/create/'}"
+                       class="btn btn-lg btn-info btn-block "
+                       th:text="${'Add Inventory'}"></a>
+                    <a th:href="@{${thisWarehouse.getId()} + '/report/remove/'}"
+                       class="btn btn-lg btn-danger btn-block "
+                       th:text="${'Remove Inventory'}"></a>
+            </fieldset>
+        </form>
+    </div>
+    <!--    </div>-->
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css">
+</head>
+
+<body>
+
+    <div th:replace="fragments/header :: header"></div>
+
+    <div class="container">
+        <div class="starter-template">
+            <h1 th:text="'This page not found'"></h1>
+            <h3 th:text="'goodbye.'"></h3>
+            <a href="/home" th:text="'Back to home'"></a>
+        </div>
+    </div>
+
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>
