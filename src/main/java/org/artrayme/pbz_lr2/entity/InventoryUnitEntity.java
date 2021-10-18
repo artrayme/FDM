@@ -1,7 +1,11 @@
 package org.artrayme.pbz_lr2.entity;
 
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,30 +25,36 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+//@RequiredArgsConstructor(onConstructor = {type, count})
+@AllArgsConstructor
+@NoArgsConstructor
 public class InventoryUnitEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NonNull
     private String type;
 
+    @NonNull
     private Long count;
 
-    @ManyToOne
+//    @ManyToOne
 //    @JoinColumn(name="WAREHOUSE_ID")
-    private WarehouseEntity warehouse;
+//    private WarehouseEntity warehouse;
 
-//    @ManyToOne
+    @ManyToOne
 //    @JoinColumn(name="INPUT_REPORT_ID")
-//    private InputReportEntity inputReport;
+    private InputReportEntity inputReport;
 
-//    @ManyToOne
+    @ManyToOne
 //    @JoinColumn(name="OUTPUT_REPORT_ID")
-//    private OutputReportEntity outputReport;
+    private OutputReportEntity outputReport;
 
 //    @ManyToOne
 //    @JoinColumn(name="FACTORY_ID")
 //    private FactoryEntity factory;
+
 
     @Override
     public boolean equals(Object o) {

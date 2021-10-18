@@ -6,6 +6,7 @@ import org.artrayme.pbz_lr2.service.InventoryCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,5 +42,10 @@ public class InventoryService implements InventoryCrudService {
     @Override
     public void updateInventoryUnit(InventoryUnitEntity InventoryUnitEntity) {
         repository.save(InventoryUnitEntity);
+    }
+
+    @Override
+    public List<InventoryUnitEntity> getInventoryFromWarehouseById(Long warehouseId) {
+        return repository.getInventoryFromWarehouseById(warehouseId);
     }
 }

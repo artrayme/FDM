@@ -32,14 +32,14 @@
                                        style="width: 100%">
                                     <thead class="thead-dark">
                                     <tr>
-                                        <th>#</th>
+<!--                                        <th>#</th>-->
                                         <th>Type</th>
                                         <th>count</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="unit : ${report.inventory}">
-                                        <td th:text="${unit.id}">Name</td>
+<!--                                        <td th:text="${unit.id}">Name</td>-->
                                         <td th:text="${unit.type}">Position</td>
                                         <td th:text="${unit.count}">Office</td>
                                     </tr>
@@ -51,7 +51,7 @@
                 </div>
                 <!--                    <p>Confirm</p>-->
                 <input class="btn btn-outline-dark" type="submit"/>
-                <a th:href="@{${report.getId()} + '/report/create/add/'}"
+                <a th:href="@{'add/'}"
                    class="btn btn-lg btn-info btn-block "
                    th:text="${'Add Inventory'}"></a>
             </fieldset>

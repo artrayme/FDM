@@ -35,7 +35,11 @@ public class WarehouseEntity {
 
     @OneToMany(mappedBy = "warehouse")
     @ToString.Exclude
-    private List<InventoryUnitEntity> inventory = new ArrayList<>();
+    private List<InputReportEntity> inputReportEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "warehouse")
+    @ToString.Exclude
+    private List<OutputReportEntity> outputReportEntities = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "FACTORY_ID")
@@ -55,4 +59,8 @@ public class WarehouseEntity {
         WarehouseEntity that = (WarehouseEntity) o;
         return id != null && Objects.equals(id, that.id);
     }
+
+//    public List<InventoryUnitEntity> getInventory(){
+//        return inputReportEntities.stream().flatMap(e->e.getInventory().stream().reduce()).toList();
+//    }
 }

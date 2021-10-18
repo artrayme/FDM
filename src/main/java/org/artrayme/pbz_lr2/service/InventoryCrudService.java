@@ -2,6 +2,7 @@ package org.artrayme.pbz_lr2.service;
 
 import org.artrayme.pbz_lr2.entity.InventoryUnitEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface InventoryCrudService {
@@ -15,5 +16,7 @@ public interface InventoryCrudService {
     void removeInventoryUnit(InventoryUnitEntity InventoryUnitEntity);
 
     void updateInventoryUnit(InventoryUnitEntity InventoryUnitEntity);
+
+    List<InventoryUnitEntity> getInventoryFromWarehouseById(Long warehouseId);
 
 }

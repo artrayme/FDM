@@ -1,11 +1,14 @@
 package org.artrayme.pbz_lr2.service.impl;
 
+import org.artrayme.pbz_lr2.entity.InventoryUnitEntity;
 import org.artrayme.pbz_lr2.entity.WarehouseEntity;
 import org.artrayme.pbz_lr2.repositories.WarehouseRepository;
 import org.artrayme.pbz_lr2.service.WarehouseCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +32,7 @@ public class WarehouseService implements WarehouseCrudService {
     }
 
     @Override
-    public Iterable<WarehouseEntity> getAllFactories() {
+    public Iterable<WarehouseEntity> getAllWarehouses() {
         return repository.findAll();
     }
 
@@ -42,4 +45,5 @@ public class WarehouseService implements WarehouseCrudService {
     public void updateWarehouse(WarehouseEntity WarehouseEntity) {
         repository.save(WarehouseEntity);
     }
+
 }

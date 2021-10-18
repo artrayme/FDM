@@ -20,10 +20,10 @@
             <div class="card" th:each="factory : ${factories}">
                 <div sec:authorize="hasRole('ROLE_ADMIN')" class="admin">
                     <button class="btn">
-                        <a th:href="@{'product/delete/' + ${factory.getId()}}"><i class="fas fa-times"></i></a>
+                        <a th:href="@{'product/delete/' + ${factory.getId()} + '/'}"><i class="fas fa-times"></i></a>
                     </button>
                     <button class="btn">
-                        <a th:href="@{'product/edit/' + ${factory.getId()}}"><i class="fas fa-wrench"></i></a>
+                        <a th:href="@{'product/edit/' + ${factory.getId()} + '/'}"><i class="fas fa-wrench"></i></a>
                     </button>
                 </div>
                 <!--                        <img class="card-img-top" th:if="${!factory.getImageUrl().isEmpty()}" th:src="${factory.getImageUrl()}" alt="Card image cap">-->
@@ -33,9 +33,9 @@
                 </div>
                 <div class="card-footer">
 <!--                    <p th:text="${factory.getId()}"></p>-->
-                    <a th:href="${'/factories/edit/' + factory.getId()}" class="btn btn-lg btn-outline-info btn-block"
+                    <a th:href="${'/factories/edit/' + factory.getId() + '/'}" class="btn btn-lg btn-outline-info btn-block"
                        th:text="${'Edit'}"></a>
-                    <a th:href="${'/factories/remove/' + factory.getId()}" class="btn btn-lg btn-outline-danger btn-block"
+                    <a th:href="${'/factories/remove/' + factory.getId() + '/'}" class="btn btn-lg btn-outline-danger btn-block"
                        th:text="${'Remove'}" th:method="DELETE"></a>
                 </div>
             </div>

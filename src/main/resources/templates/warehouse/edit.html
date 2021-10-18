@@ -9,7 +9,7 @@
 <div class="container bg-white bg-opacity-50 col-md-6 col-sm-1 col-sm-5 offset-2">
     <div class="col-sm-12 col-sm-8 col-md-6 col-sm-offset-4 col-md-offset-3">
 
-        <form class="form-signin" autocomplete="off" th:action="@{${id}}" th:object="${thisWarehouse}" method="POST">
+        <form class="form-signin" autocomplete="off" th:action="@{${''}}" th:object="${thisWarehouse}" method="POST">
             <fieldset>
                 <h1>Warehouse editor</h1>
                 <div class="form-group">
@@ -32,14 +32,14 @@
                                                style="width: 100%">
                                             <thead class="thead-dark">
                                             <tr>
-                                                <th>#</th>
+<!--                                                <th>#</th>-->
                                                 <th>Type</th>
                                                 <th>count</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="unit : ${thisWarehouse.inventory}">
-                                                <td th:text="${unit.id}">Name</td>
+<!--                                                <td th:text="${unit.id}">Name</td>-->
                                                 <td th:text="${unit.type}">Position</td>
                                                 <td th:text="${unit.count}">Office</td>
                                             </tr>
@@ -53,10 +53,10 @@
                         </div>
                     </div>
                     <input class="btn btn-primary" type="submit"/>
-                    <a th:href="@{${thisWarehouse.getId()} + '/report/create/'}"
+                    <a th:href="@{${#httpServletRequest.requestURI} + 'report/create/'}"
                        class="btn btn-lg btn-info btn-block "
                        th:text="${'Add Inventory'}"></a>
-                    <a th:href="@{${thisWarehouse.getId()} + '/report/remove/'}"
+                    <a th:href="@{${#httpServletRequest.requestURI} + 'report/remove/'}"
                        class="btn btn-lg btn-danger btn-block "
                        th:text="${'Remove Inventory'}"></a>
             </fieldset>
