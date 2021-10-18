@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/factories/edit/{factoryId}/warehouses/edit/{warehouseId}/report/")
 public class ReportController {
     private final WarehouseService warehouseService;
-    private final FactoryService factoryService;
     private final InventoryService inventoryService;
     private final InputReportService inputReportService;
     private final OutputReportService outputReportService;
@@ -42,12 +41,11 @@ public class ReportController {
     private boolean isCreated = true;
 
     @Autowired
-    public ReportController(WarehouseService warehouseService, FactoryService factoryService,
+    public ReportController(WarehouseService warehouseService, InventoryService inventoryService,
+                            InputReportService inputReportService, OutputReportService outputReportService,
                             InventoryUnitMapper inventoryUnitMapper, InputReportMapper inputReportMapper,
-                            OutputReportMapper outputReportMapper, InventoryService inventoryService,
-                            InputReportService inputReportService, OutputReportService outputReportService) {
+                            OutputReportMapper outputReportMapper) {
         this.warehouseService = warehouseService;
-        this.factoryService = factoryService;
         this.inventoryUnitMapper = inventoryUnitMapper;
         this.inputReportMapper = inputReportMapper;
         this.outputReportMapper = outputReportMapper;

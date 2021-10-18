@@ -8,15 +8,6 @@ import java.util.List;
 
 public interface InventoryRepository extends CrudRepository<InventoryUnitEntity, Long> {
 
-    //    @Query(value = "select distinct min(iu.id) as id, " +
-    //            "iu.type, sum(iu.count) as count, " +
-    //            "min(iu.input_report_id) as input_report_id, " +
-    //            "min(iu.output_report_id) as output_report_id " +
-    //            "from inventory_unit iu " +
-    //            "join input_report ir on ir.id = iu.input_report_id " +
-    //            "where warehouse_id=3 " +
-    //            "group by warehouse_id, type",
-    //            nativeQuery = true)
     @Query(value = """
             select min(id)          as id,
                    type,
@@ -27,14 +18,14 @@ public interface InventoryRepository extends CrudRepository<InventoryUnitEntity,
                   from inventory_unit iu
                            join input_report ir
                                on ir.id = iu.input_report_id
-                  where ir.warehouse_id = 3
+                  where ir.warehouse_id = :warehouseId
                   group by iu.type
                   union all
                   select min(iu.id) as id, iu.type, 0 as res1, sum(iu.count) as res2, 1 as ir_id, min(iu.output_report_id) as or_id
                   from inventory_unit iu
                            join output_report o
                                 on o.id = iu.output_report_id
-                  where o.warehouse_id = 3
+                  where o.warehouse_id = :warehouseId
                   group by iu.type
                  ) as iiio
             group by type;
