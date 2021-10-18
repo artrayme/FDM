@@ -5,6 +5,7 @@ html {
 
 body {
     background-image: url(../images/factory3.png);
+    /*opacity: 0.8;*/
     background-repeat: no-repeat;
     background-size: 100% 100%;
     /*background: rgb(209, 209, 216);*/

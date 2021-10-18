@@ -12,38 +12,43 @@
 <div class="container">
 
     <div class="row">
-<!--        <nav class="side-menu">-->
-<!--            <h3>Factories</h3>-->
-<!--        </nav>-->
+        <!--        <nav class="side-menu">-->
+        <!--            <h3>Factories</h3>-->
+        <!--        </nav>-->
 
-        <div class="col card-deck ml-5 my-3" th:if="${factories_count != 0}">
-            <div class="card" th:each="factory : ${factories}">
-                <div sec:authorize="hasRole('ROLE_ADMIN')" class="admin">
-                    <button class="btn">
-                        <a th:href="@{'product/delete/' + ${factory.getId()} + '/'}"><i class="fas fa-times"></i></a>
-                    </button>
-                    <button class="btn">
-                        <a th:href="@{'product/edit/' + ${factory.getId()} + '/'}"><i class="fas fa-wrench"></i></a>
-                    </button>
-                </div>
-                <!--                        <img class="card-img-top" th:if="${!factory.getImageUrl().isEmpty()}" th:src="${factory.getImageUrl()}" alt="Card image cap">-->
-                <div class="card-body">
-                    <h4 class="card-title" th:text="${factory.getName()}"></h4>
-                    <!--                            <p class="card-text" th:text="${factory.getDescription()}"></p>-->
-                </div>
-                <div class="card-footer">
-<!--                    <p th:text="${factory.getId()}"></p>-->
-                    <a th:href="${'/factories/edit/' + factory.getId() + '/'}" class="btn btn-lg btn-outline-info btn-block"
-                       th:text="${'Edit'}"></a>
-                    <a th:href="${'/factories/remove/' + factory.getId() + '/'}" class="btn btn-lg btn-outline-danger btn-block"
-                       th:text="${'Remove'}" th:method="DELETE"></a>
+        <div class="row" th:if="${factories_count != 0}">
+            <div class="col-sm-3 mt-2" th:each="factory : ${factories}">
+                <div class="card" >
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="admin">
+                        <button class="btn">
+                            <a th:href="@{'product/delete/' + ${factory.getId()} + '/'}"><i
+                                    class="fas fa-times"></i></a>
+                        </button>
+                        <button class="btn">
+                            <a th:href="@{'product/edit/' + ${factory.getId()} + '/'}"><i class="fas fa-wrench"></i></a>
+                        </button>
+                    </div>
+                    <!--                        <img class="card-img-top" th:if="${!factory.getImageUrl().isEmpty()}" th:src="${factory.getImageUrl()}" alt="Card image cap">-->
+                    <div class="card-body">
+                        <h4 class="card-title" th:text="${factory.getName()}"></h4>
+                        <p class="card-text" th:text="${'Warehouses count = '+factory.getWarehouses().size()}"></p>
+                    </div>
+                    <div class="card-footer">
+                        <!--                    <p th:text="${factory.getId()}"></p>-->
+                        <a th:href="${'/factories/edit/' + factory.getId() + '/'}"
+                           class="btn btn-lg btn-outline-info btn-block"
+                           th:text="${'Edit'}"></a>
+                        <a th:href="${'/factories/remove/' + factory.getId() + '/'}"
+                           class="btn btn-lg btn-outline-danger btn-block"
+                           th:text="${'Remove'}" th:method="DELETE"></a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>
-            <a th:href="${'/factories/create/'}" class="btn btn-lg btn-outline-info btn-block"
+        <div class="mt-2">
+            <a th:href="${'/factories/create/'}" class="btn btn-lg btn-primary btn-block"
                th:text="${'Add Factory'}"></a>
-            <span th:text="${'Factories count'} + ' ' + ${factories_count}"></span>
+<!--            <span class="bg-info" th:text="${'Factories count'} + ' ' + ${factories_count}"></span>-->
         </div>
     </div>
 </div>

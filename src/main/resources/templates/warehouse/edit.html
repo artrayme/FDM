@@ -32,14 +32,14 @@
                                                style="width: 100%">
                                             <thead class="thead-dark">
                                             <tr>
-<!--                                                <th>#</th>-->
+                                                <!--                                                <th>#</th>-->
                                                 <th>Type</th>
                                                 <th>count</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="unit : ${thisWarehouse.inventory}">
-<!--                                                <td th:text="${unit.id}">Name</td>-->
+                                                <!--                                                <td th:text="${unit.id}">Name</td>-->
                                                 <td th:text="${unit.type}">Position</td>
                                                 <td th:text="${unit.count}">Office</td>
                                             </tr>
@@ -52,13 +52,20 @@
 
                         </div>
                     </div>
-                    <input class="btn btn-primary" type="submit"/>
-                    <a th:href="@{${#httpServletRequest.requestURI} + 'report/create/'}"
-                       class="btn btn-lg btn-info btn-block "
-                       th:text="${'Add Inventory'}"></a>
-                    <a th:href="@{${#httpServletRequest.requestURI} + 'report/remove/'}"
-                       class="btn btn-lg btn-danger btn-block "
-                       th:text="${'Remove Inventory'}"></a>
+                    <div class="row">
+                        <div class="col">
+                            <a th:href="@{${#httpServletRequest.requestURI} + 'report/create/'}"
+                               class="btn btn-lg btn-info btn-block form-control "
+                               th:text="${'Add Inventory'}"></a>
+                        </div>
+                        <div class="col ">
+                            <a th:href="@{${#httpServletRequest.requestURI} + 'report/remove/'}"
+                               class="btn btn-lg btn-danger btn-block form-control "
+                               th:text="${'Remove Inventory'}"></a>
+                        </div>
+                    </div>
+                    <input class="btn btn-success mt-2 form-control" type="submit"/>
+
             </fieldset>
         </form>
     </div>

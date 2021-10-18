@@ -9,12 +9,12 @@ import org.artrayme.pbz_lr2.dto.model.OutputReportDto;
 import org.artrayme.pbz_lr2.entity.InputReportEntity;
 import org.artrayme.pbz_lr2.entity.OutputReportEntity;
 import org.artrayme.pbz_lr2.entity.WarehouseEntity;
-import org.artrayme.pbz_lr2.service.impl.FactoryService;
 import org.artrayme.pbz_lr2.service.impl.InputReportService;
 import org.artrayme.pbz_lr2.service.impl.InventoryService;
 import org.artrayme.pbz_lr2.service.impl.OutputReportService;
 import org.artrayme.pbz_lr2.service.impl.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/factories/edit/{factoryId}/warehouses/edit/{warehouseId}/report/")
@@ -65,19 +68,27 @@ public class ReportController {
     }
 
     @PostMapping(value = "remove")
-    String remove(@ModelAttribute("report") OutputReportDto dto, @PathVariable Long warehouseId, @PathVariable Long factoryId) {
+    String remove(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                  @RequestParam(value = "workerFIO") String name,
+                  @RequestParam(value = "workerPost") String post,
+                  @PathVariable Long warehouseId, @PathVariable Long factoryId) {
         isCreated = true;
-        WarehouseEntity warehouse = warehouseService.findWarehouseById(warehouseId).get();
-        OutputReportEntity report = outputReportMapper.toEntity(outputReportDto);
-        report.setWarehouse(warehouse);
-        outputReportService.saveOutputReportOrUpdate(report);
-        outputReportDto.getInventory().stream().map(inventoryUnitMapper::toEntity).forEach(inventoryUnitEntity -> {
-            inventoryUnitEntity.setOutputReport(report);
-            inventoryService.saveInventoryUnitOrUpdate(inventoryUnitEntity);
-        });
+        if (!inputReportDto.getInventory().isEmpty()) {
+            WarehouseEntity warehouse = warehouseService.findWarehouseById(warehouseId).get();
+            OutputReportEntity report = outputReportMapper.toEntity(outputReportDto);
+            report.setWarehouse(warehouse);
+            report.setDate(date);
+            report.setWorkerFIO(name);
+            report.setWorkerPost(post);
+            outputReportService.saveOutputReportOrUpdate(report);
+            outputReportDto.getInventory().stream().map(inventoryUnitMapper::toEntity).forEach(inventoryUnitEntity -> {
+                inventoryUnitEntity.setOutputReport(report);
+                inventoryService.saveInventoryUnitOrUpdate(inventoryUnitEntity);
+            });
 
-        warehouse.getOutputReportEntities().add(report);
-        warehouseService.saveWarehouseOrUpdate(warehouse);
+            warehouse.getOutputReportEntities().add(report);
+            warehouseService.saveWarehouseOrUpdate(warehouse);
+        }
         return "redirect:/factories/edit/" + factoryId + "/warehouses/edit/" + warehouseId + "/";
     }
 
@@ -104,19 +115,27 @@ public class ReportController {
     }
 
     @PostMapping(value = "create")
-    public String create(@ModelAttribute("report") InputReportDto dto, @PathVariable Long warehouseId, @PathVariable String factoryId) {
+    public String create(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                         @RequestParam(value = "workerFIO") String name,
+                         @RequestParam(value = "workerPost") String post,
+                         @PathVariable Long warehouseId, @PathVariable String factoryId) {
         isCreated = true;
-        WarehouseEntity warehouse = warehouseService.findWarehouseById(warehouseId).get();
-        InputReportEntity report = inputReportMapper.toEntity(inputReportDto);
-        report.setWarehouse(warehouse);
-        inputReportService.saveInputReportOrUpdate(report);
-        inputReportDto.getInventory().stream().map(inventoryUnitMapper::toEntity).forEach(inventoryUnitEntity -> {
-            inventoryUnitEntity.setInputReport(report);
-            inventoryService.saveInventoryUnitOrUpdate(inventoryUnitEntity);
-        });
+        if (!inputReportDto.getInventory().isEmpty()) {
+            WarehouseEntity warehouse = warehouseService.findWarehouseById(warehouseId).get();
+            InputReportEntity report = inputReportMapper.toEntity(inputReportDto);
+            report.setDate(date);
+            report.setWorkerFIO(name);
+            report.setWorkerPost(post);
+            report.setWarehouse(warehouse);
+            inputReportService.saveInputReportOrUpdate(report);
+            inputReportDto.getInventory().stream().map(inventoryUnitMapper::toEntity).forEach(inventoryUnitEntity -> {
+                inventoryUnitEntity.setInputReport(report);
+                inventoryService.saveInventoryUnitOrUpdate(inventoryUnitEntity);
+            });
 
-        warehouse.getInputReportEntities().add(report);
-        warehouseService.saveWarehouseOrUpdate(warehouse);
+            warehouse.getInputReportEntities().add(report);
+            warehouseService.saveWarehouseOrUpdate(warehouse);
+        }
         return "redirect:/factories/edit/" + factoryId + "/warehouses/edit/" + warehouseId + "/";
     }
 

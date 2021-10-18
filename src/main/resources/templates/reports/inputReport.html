@@ -14,9 +14,12 @@
             <fieldset>
                 <h1>Input report</h1>
                 <div class="form-group">
-                    <label>Date</label>
-                    <input type="date" th:field="*{date}" class="form-control input-lg" title="username"
-                           autofocus="true"/>
+                    <label for="date-started">Date:</label>
+                    <input type="date" th:value="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}" th:field="*{date}" id="date-started"/>
+
+<!--                    <label>Date</label>-->
+<!--                    <input type="date" th:field="*{date}" class="form-control input-lg" title="username"-->
+<!--                           autofocus="true"/>-->
                     <label>Worker FIO </label>
                     <input type="text" th:field="*{workerFIO}" class="form-control input-lg" title="username"
                            autofocus="true"/>
@@ -32,16 +35,16 @@
                                        style="width: 100%">
                                     <thead class="thead-dark">
                                     <tr>
-<!--                                        <th>#</th>-->
+                                        <!--                                        <th>#</th>-->
                                         <th>Type</th>
                                         <th>count</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="unit : ${report.inventory}">
-<!--                                        <td th:text="${unit.id}">Name</td>-->
-                                        <td th:text="${unit.type}">Position</td>
-                                        <td th:text="${unit.count}">Office</td>
+                                        <!--                                        <td th:text="${unit.id}">Name</td>-->
+                                        <td th:text="${unit.type}">Type</td>
+                                        <td th:text="${unit.count}">Count</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -49,11 +52,14 @@
                         </div>
                     </div>
                 </div>
-                <!--                    <p>Confirm</p>-->
-                <input class="btn btn-outline-dark" type="submit"/>
-                <a th:href="@{'add/'}"
-                   class="btn btn-lg btn-info btn-block "
-                   th:text="${'Add Inventory'}"></a>
+                <div>
+                    <a th:href="@{'add/'}"
+                       class="btn btn-lg btn-info btn-block form-control"
+                       th:text="${'Add Inventory'}"></a>
+                </div>
+
+                <input class="btn btn-success mt-2 form-control" type="submit"/>
+
             </fieldset>
         </form>
     </div>

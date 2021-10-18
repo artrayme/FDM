@@ -54,7 +54,7 @@ public class FactoryLoader {
         this.inventoryRepository = inventoryRepository;
     }
 
-    @EventListener({ContextStartedEvent.class})
+//    @EventListener({ContextStartedEvent.class})
     public void handleContextStart() {
 
         FactoryEntity testFactory = new FactoryEntity();
