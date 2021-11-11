@@ -31,4 +31,5 @@ public interface InventoryRepository extends CrudRepository<InventoryUnitEntity,
             group by type;
             """, nativeQuery = true)
     List<InventoryUnitEntity> getInventoryFromWarehouseById(Long warehouseId);
+
 }
