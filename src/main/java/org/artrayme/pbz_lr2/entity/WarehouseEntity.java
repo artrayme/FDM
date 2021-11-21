@@ -5,8 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,53 +19,59 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "warehouse")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Table(name = "warehouse", uniqueConstraints = { @UniqueConstraint(name = "WAREHOUSE_NAME_CONSTRAIN", columnNames = "name") })
 public class WarehouseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
+    @NotBlank
+    @Column(name = "name")
     private String name;
+
+    @Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$")
+    @Column(name = "telephone")
     private String telephoneNumber;
 
-    @OneToMany(mappedBy = "warehouse")
+    @OneToMany(mappedBy = "warehouse", orphanRemoval = true)
     @ToString.Exclude
     private List<InputReportEntity> inputReportEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "warehouse")
+    @OneToMany(mappedBy = "warehouse", orphanRemoval = true)
     @ToString.Exclude
     private List<OutputReportEntity> outputReportEntities = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "FACTORY_ID")
+    @JoinColumn(name = "factory_id", nullable = false, foreignKey = @ForeignKey(name="FK_WAREHOUSE_TO_FACTORY"))
     private FactoryEntity factory;
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
+        if (o == null || getClass() != o.getClass())
             return false;
-        WarehouseEntity that = (WarehouseEntity) o;
-        return id != null && Objects.equals(id, that.id);
+        WarehouseEntity warehouse = (WarehouseEntity) o;
+        return Objects.equals(name, warehouse.name) && Objects.equals(factory, warehouse.factory);
     }
 
-//    public List<InventoryUnitEntity> getInventory(){
-//        return inputReportEntities.stream().flatMap(e->e.getInventory().stream().reduce()).toList();
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, factory);
+    }
 }

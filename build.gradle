@@ -6,7 +6,8 @@ plugins {
 
 group = 'org.artrayme'
 version = '0.0.1-SNAPSHOT'
-//sourceCompatibility = '17'
+sourceCompatibility = '16'
+targetCompatibility = '16'
 
 configurations {
     compileOnly {
@@ -22,11 +23,11 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation group: 'org.webjars', name: 'bootstrap', version: '5.1.1'
     implementation group: 'org.webjars', name: 'jquery', version: '3.6.0'
     implementation 'org.modelmapper:modelmapper:2.4.4'
@@ -40,24 +41,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
-//
-//jar {
-//    from {
-//        configurations
-//                .runtimeClasspath
-//                .collect {
-//                    zipTree(it)
-//                }
-//    }
-//    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-//    manifest {
-//        attributes["Manifest-Version"] = "1.0"
-//        attributes["Main-Class"] = "org.artrayme.pbz_lr2.PbzLr2Application"
-//    }
-//
-//}
-
-
-
-// Include dependent libraries in archive.
