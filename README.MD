@@ -1,5 +1,5 @@
 # Factory Database Manager (FDM)
-This project is a simple Spring Boot Enterprise application. 
+This project is a simple Spring Boot JSP application. 
 It provides CRUD operations on Entities with JPA (Hibernate) and display 
 result at browser frontend using Servlets. 
 
@@ -30,3 +30,12 @@ as the input consignment note.
 * Additional 
   * All information about adding/removing the inventory (by type)
   * List of all warehouses
+
+## Demonstration 
+
+### Database 
+![](docs/database.png)
+
+### View 
+
+![](docs/factories_view.png)
