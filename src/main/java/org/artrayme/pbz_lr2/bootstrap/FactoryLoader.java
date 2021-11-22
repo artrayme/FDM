@@ -171,11 +171,4 @@ public class FactoryLoader {
 
     }
 
-    //    @EventListener({ContextStartedEvent.class})
-    public void testGettingWarehouseInventory() {
-        var x = inventoryRepository.getInventoryFromWarehouseById(3L);
-        System.out.println(x);
-        //        var warehouseInventoryById = warehouseRepository.getWarehouseInventoryById(3L);
-        //        System.out.println(warehouseInventoryById);
-    }
 }

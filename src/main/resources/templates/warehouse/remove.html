@@ -9,16 +9,16 @@
 <div class="container bg-white bg-opacity-10 col-md-6 col-sm-1 col-sm-5 offset-2">
     <!--    <div class="row" style="margin-top:40px">-->
     <div class="col-sm-12 col-sm-8 col-md-6 col-sm-offset-4 col-md-offset-3">
-        <form class="form-signin" autocomplete="off" th:action="@{${id}}" th:object="${thisWarehouse}" method="POST">
+        <form class="form-signin" autocomplete="off" th:action="@{${''}}" th:object="${thisWarehouse}" method="POST">
             <fieldset>
                 <h1>Warehouse remover</h1>
                 <div class="form-group">
                     <label>Warehouse name</label>
-                    <h4 class="card-title" th:text="${thisWarehouse.name}"></h4>
+                    <h4 class="card-title" th:text="${thisWarehouse.getName()}"></h4>
                     <label>Warehouse telephone</label>
-                    <h4 class="card-title" th:text="${thisWarehouse.telephoneNumber}"></h4>
+                    <h4 class="card-title" th:text="${thisWarehouse.getTelephoneNumber()}"></h4>
                     <label>Inventory count</label>
-                    <h4 class="card-title" th:text="${thisWarehouse.inventory.size()}"></h4>
+<!--                    <h4 class="card-title" th:text="${thisWarehouse.getInventory().size()}"></h4>-->
 
                     <!--                    <input type="text" th:field="*{name}" class="form-control input-lg" title="username" autofocus="true" />-->
                     <!--                        <div class="alert alert-danger error-alert" th:if="${#fields.hasErrors('username')}" th:errors="*{name}"></div>-->

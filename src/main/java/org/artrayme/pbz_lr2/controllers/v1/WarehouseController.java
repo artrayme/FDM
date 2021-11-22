@@ -10,19 +10,25 @@ import org.artrayme.pbz_lr2.service.impl.FactoryService;
 import org.artrayme.pbz_lr2.service.impl.InventoryService;
 import org.artrayme.pbz_lr2.service.impl.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 @RequestMapping("/factories/edit/{factoryId}/warehouses")
+@Validated
 public class WarehouseController {
     private final WarehouseMapper mapper;
     private final InventoryUnitMapper inventoryUnitMapper;
@@ -40,33 +46,24 @@ public class WarehouseController {
         this.factoryService = factoryService;
     }
 
-    @GetMapping()
-    String getAll(Model model, @PathVariable String factoryId) {
-        model.addAttribute("warehouses", service.getAllWarehouses());
-        return "factories";
+    @GetMapping("create")
+    public String creator(Model model, @PathVariable Long factoryId) {
+        model.addAttribute("warehouseForm", new WarehouseDto());
+        return "warehouse/create";
     }
 
-    @GetMapping(value = "remove/{id}")
-    String remover(@PathVariable("id") Long id, Model model, @PathVariable String factoryId) {
-        var warehouseById = service.findWarehouseById(id);
-        if (warehouseById.isPresent()) {
-            model.addAttribute("thisWarehouse", warehouseById.get());
-            return "warehouse/remove";
-        } else {
-            return "error/404";
-        }
-    }
+    @PostMapping(value = "create")
+    public String create(@ModelAttribute("warehouseForm") WarehouseDto dto, @PathVariable Long factoryId) {
+        WarehouseEntity entity = mapper.toEntity(dto);
+        Optional<FactoryEntity> factoryById = factoryService.findFactoryById(factoryId);
 
-    @PostMapping(value = "remove/{id}")
-    String remove(@PathVariable("id") Long id, @PathVariable Long factoryId) {
-        Optional<WarehouseEntity> warehouseById = service.findWarehouseById(id);
-        if (warehouseById.isPresent()) {
-            service.removeWarehouse(warehouseById.get());
+        if (factoryById.isPresent()) {
+            entity.setFactory(factoryById.get());
+            service.saveWarehouseOrUpdate(entity);
             return "redirect:/factories/edit/" + factoryId + "/";
-        } else {
+
+        } else
             return "error/404";
-        }
-        //        model.addAttribute("remove_form", service.findwarehouseById(id));
     }
 
     @GetMapping("edit/{id}")
@@ -90,25 +87,32 @@ public class WarehouseController {
         entity.setFactory(factoryService.findFactoryById(factoryId).get());
         service.updateWarehouse(entity);
         return "redirect:/factories/edit/" + factoryId + "/";
-
     }
 
-    @GetMapping("create")
-    public String creator(Model model, @PathVariable Long factoryId) {
-        model.addAttribute("warehouseForm", new WarehouseDto());
-        return "warehouse/create";
-    }
-
-    @PostMapping(value = "create")
-    public String create(@ModelAttribute("warehouseForm") WarehouseDto dto, @PathVariable Long factoryId) {
-        WarehouseEntity entity = mapper.toEntity(dto);
-        Optional<FactoryEntity> factoryById = factoryService.findFactoryById(factoryId);
-        if (factoryById.isPresent()) {
-            entity.setFactory(factoryById.get());
-            service.saveWarehouseOrUpdate(entity);
-            return "redirect:/factories/edit/" + factoryId + "/";
-
-        } else
+    @GetMapping(value = "remove/{id}")
+    String remover(@PathVariable("id") Long id, Model model, @PathVariable String factoryId) {
+        var warehouseById = service.findWarehouseById(id);
+        if (warehouseById.isPresent()) {
+            model.addAttribute("thisWarehouse", mapper.toDto(warehouseById.get()));
+            return "warehouse/remove";
+        } else {
             return "error/404";
+        }
+    }
+
+    @PostMapping(value = "remove/{id}")
+    String remove(@PathVariable("id") Long id, @PathVariable Long factoryId) {
+        Optional<WarehouseEntity> warehouseById = service.findWarehouseById(id);
+        if (warehouseById.isPresent()) {
+            service.removeWarehouse(warehouseById.get());
+            return "redirect:/factories/edit/" + factoryId + "/";
+        } else {
+            return "error/404";
+        }
+    }
+
+    @ExceptionHandler(value = {ConstraintViolationException.class})
+    public ModelAndView ModelAndViewExceptionHandler(Exception ex) {
+        return new ModelAndView("error/error", HttpStatus.BAD_REQUEST);
     }
 }

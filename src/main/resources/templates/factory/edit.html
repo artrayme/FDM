@@ -17,10 +17,10 @@
                     <input type="text" th:field="*{name}" class="form-control input-lg" title="username"
                            autofocus="true"/>
                     <div>
-                        <span th:text="${'Warehouses count'} + ' ' + ${warehouses.size()}"></span>
+                        <span th:text="${'Warehouses count'} + ' ' + ${thisFactory.getWarehouses().size()}"></span>
                     </div>
-                    <div class="col card-deck ml-5 my-3" th:if="${warehouses.size() != 0}">
-                        <div class="card" th:each="warehouse : ${warehouses}">
+                    <div class="col card-deck ml-5 my-3" th:if="${thisFactory.getWarehouses().size() != 0}">
+                        <div class="card" th:each="warehouse : ${thisFactory.getWarehouses()}">
 
                             <!--                        <img class="card-img-top" th:if="${!factory.getImageUrl().isEmpty()}" th:src="${factory.getImageUrl()}" alt="Card image cap">-->
                             <div class="card-body">
