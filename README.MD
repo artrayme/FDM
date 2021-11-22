@@ -39,3 +39,17 @@ as the input consignment note.
 ### View 
 
 ![](docs/factories_view.png)
+
+## How to start
+This application required gradle 7.2 and java 16 to compile.
+
+There are two ways to start this application:
+* gradle task:
+`
+gradle bootRun`
+But you have to install postgresql and create a database named "fdm" (and maybe something else. I don't know.).
+* Or, preferably, you can install docker and docker-compose.After that run script "run.sh" (`
+sh run.sh`)
+
+After that open your browser on port 8080. 
+
