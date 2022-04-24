@@ -1,11 +1,11 @@
-version: '2'
+version: '3.8'
 
 services:
-  app:
-    image: 'fdm:latest'
+  fdm:
     build:
+      dockerfile: fdm.Dockerfile
       context: ""
-    container_name: app
+    container_name: fdm
     depends_on:
       - db
     environment:

@@ -1,6 +1,6 @@
-sh ./gradlew bootJar
-cp build/libs/PBZ_lr2-0.0.1-SNAPSHOT.jar docker
+#!/bin/bash
+docker build --no-cache -f build-fdm.Dockerfile -t artrayme/fdm-build .
+docker run -v $(pwd)/docker:/docker -t artrayme/fdm-build -it
 cd docker
-docker build -t fdm .
+docker-compose build --no-cache fdm
 docker-compose up
-rm docker/PBZ_lr2-0.0.1-SNAPSHOT.jar

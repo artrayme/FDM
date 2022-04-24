@@ -6,8 +6,8 @@ plugins {
 
 group = 'org.artrayme'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '16'
-targetCompatibility = '16'
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
 configurations {
     compileOnly {
@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation group: 'org.webjars', name: 'bootstrap', version: '5.1.1'
     implementation group: 'org.webjars', name: 'jquery', version: '3.6.0'
-    implementation 'org.modelmapper:modelmapper:2.4.4'
+    implementation 'org.modelmapper:modelmapper:3.1.0'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
