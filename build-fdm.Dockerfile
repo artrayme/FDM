@@ -1,6 +1,5 @@
 FROM gradle:7.3.0-jdk17-alpine
 
-VOLUME /tmp
 COPY src src
 COPY build.gradle build.gradle
 COPY settings.gradle settings.gradle
